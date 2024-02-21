@@ -2,7 +2,8 @@ package main
 
 import "fmt"
 
-const PROJECT_FOLDER_NAME = ".requester"
+const DEFAULT_EDITOR = "/usr/bin/code"
+const REQUESTER_FOLDER_NAME = ".requester"
 const PROJECT_ENV_FILENAME = ".env.json"
 
 const DEBUG = true
@@ -29,10 +30,10 @@ func ensureRequesterFolder() {
 
 func getRequesterFolder(finalPath string) string {
 	if finalPath == "" {
-		return getHomeDir() + "/" + PROJECT_FOLDER_NAME
+		return getHomeDir() + "/" + REQUESTER_FOLDER_NAME
 	}
 
-	return getHomeDir() + "/" + PROJECT_FOLDER_NAME + "/" + finalPath
+	return getHomeDir() + "/" + REQUESTER_FOLDER_NAME + "/" + finalPath
 }
 
 func getProjectsFolder() string {
@@ -41,17 +42,4 @@ func getProjectsFolder() string {
 
 func getProjectFolder(projectName string) string {
 	return getProjectsFolder() + "/" + projectName
-}
-
-func createEnvFile(projectName string) {
-	projectPath := getProjectFolder(projectName)
-
-	envFilePath := projectPath + "/" + PROJECT_ENV_FILENAME
-
-	if !touchFile(envFilePath, "{}") {
-		fmt.Printf("Error creating .env file: \"%s\"", envFilePath)
-		fmt.Println("File already exists?")
-	}
-
-	fmt.Printf("Created .env file: \"%s\"", envFilePath)
 }

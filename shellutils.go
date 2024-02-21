@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/fs"
 	"log"
 	"os"
 )
@@ -54,6 +55,25 @@ func abort(args ...any) {
 	fmt.Println(args...)
 
 	os.Exit(1)
+}
+
+func listDir(path string, printFunc func(file fs.DirEntry)) {
+	files, err := os.ReadDir(path)
+	if err != nil {
+		log.Fatal("listDir: ", err)
+	}
+
+	if len(files) <= 0 {
+		fmt.Printf("%s Folder Empty", path)
+
+		return
+	}
+
+	// fmt.Println("Projects:")
+
+	for _, file := range files {
+		printFunc(file)
+	}
 }
 
 // func usage(flagSet *flag.FlagSet) func() {

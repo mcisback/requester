@@ -41,7 +41,7 @@ func main() {
 		projectName := os.Args[1]
 
 		if len(os.Args) < 3 {
-			abort("Missing req command")
+			abort("Missing req or edit command")
 		}
 
 		runProject(projectName)
